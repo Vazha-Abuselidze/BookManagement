@@ -94,7 +94,7 @@ namespace BookManagementSystem
             }
         }
 
-        //  method  - Add Book 
+        //  Method  - Add Book 
         static void UI_AddBook()
         {
             Console.WriteLine("\nAdd New Book");
@@ -114,7 +114,7 @@ namespace BookManagementSystem
             Console.WriteLine("Book added successfully!");
         }
 
-        // Method List Books
+        // Method - List Books
         static void UI_ListBooks()
         {
             Console.WriteLine("\nBook List");
@@ -133,7 +133,7 @@ namespace BookManagementSystem
             }
         }
 
-        //  Method :  Search Book 
+        //  Method -  Search Book 
         static void UI_SearchBook()
         {
             Console.WriteLine("\n Search Book ");
@@ -187,3 +187,4 @@ namespace BookManagementSystem
         }
     }
 }
+
