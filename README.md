@@ -8,6 +8,6 @@ Please select an action:
 Selection: 1
 
   Add New Book 
-Enter Title: The Unity Programmer
-Enter Author: Giorgi 
+Enter Title: The Unity Programmer <br />
+Enter Author: Giorgi  <br />
 Enter Publication Year: 2025
