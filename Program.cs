@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,9 +30,15 @@ namespace BookManagementSystem
         // I am using in-memory db
         private List<Book> _books = new List<Book>();
 
-        public void AddBook(Book book)
+        public bool AddBook(Book book)
         {
+            if (BookExists(book.Title, book.Author))
+            {
+                return false;
+            }
+
             _books.Add(book);
+            return true;
         }
 
         public List<Book> GetAllBooks()
@@ -45,6 +51,14 @@ namespace BookManagementSystem
             // Case-insensitive search
             return _books.FirstOrDefault(b =>
                 b.Title.Contains(title, StringComparison.OrdinalIgnoreCase));
+        }
+
+        private bool BookExists(string title, string author)
+        {
+            // Check if any book exists with the same Title AND Author (case-insensitive)
+            return _books.Any(b =>
+                b.Title.Equals(title, StringComparison.OrdinalIgnoreCase) &&
+                b.Author.Equals(author, StringComparison.OrdinalIgnoreCase));
         }
     }
 
@@ -109,12 +123,18 @@ namespace BookManagementSystem
             int year = GetValidYearInt("Enter Publication Year: ");
 
             Book newBook = new Book(title, author, year);
-            _manager.AddBook(newBook);
+            if (_manager.AddBook(newBook))
+            {
+                Console.WriteLine("Book added successfully!");
+            }
+            else
+            {
+                Console.WriteLine($"ERROR : A book with the same title {title} and Author {author} already exists. Book not added.");
+            }
 
-            Console.WriteLine("Book added successfully!");
         }
 
-        // Method - List Books
+        // Method List Books
         static void UI_ListBooks()
         {
             Console.WriteLine("\nBook List");
@@ -133,11 +153,11 @@ namespace BookManagementSystem
             }
         }
 
-        //  Method -  Search Book 
+        //  Method :  Search Book 
         static void UI_SearchBook()
         {
             Console.WriteLine("\n Search Book ");
-            string searchTitle = GetValidString("Enter exact title to search: ");
+            string searchTitle = GetValidString("Enter title to search: ");
 
             var result = _manager.SearchByTitle(searchTitle);
 
@@ -176,7 +196,6 @@ namespace BookManagementSystem
                 Console.Write(prompt);
                 string input = Console.ReadLine();
 
-                // TryParse handles the exception handling logic safely
                 if (int.TryParse(input, out result) && result > 0 && result <= DateTime.Now.Year + 1)
                 {
                     return result;
@@ -187,4 +206,3 @@ namespace BookManagementSystem
         }
     }
 }
-
